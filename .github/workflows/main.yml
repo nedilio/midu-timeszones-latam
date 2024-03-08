@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }} # Username to SSH into EC2 instance
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Your SSH private key (the contents of the .pem file)
           source: "dist/*" # Path to your built React app
-          target: "/var/www/html/change-times/dist" # Path on the EC2 instance to transfer files
+          target: "/var/www/html/change-times" # Path on the EC2 instance to transfer files
 
 
       # - name: SSH into EC2 instance and restart server
