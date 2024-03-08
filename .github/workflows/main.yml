@@ -33,14 +33,15 @@ jobs:
           source: "dist/*" # Path to your built React app
           target: "/var/www/html/change-times/dist" # Path on the EC2 instance to transfer files
 
-      - name: SSH into EC2 instance and restart server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /var/www/html/change-times/dist
-            # Restart your server here (e.g., using pm2 or systemctl)
-            # Consider providing more specific restart instructions based on your setup
+
+      # - name: SSH into EC2 instance and restart server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.EC2_HOST }}
+      #     username: ${{ secrets.EC2_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: 22
+      #     script: |
+      # cd /var/www/html/change-times/dist
+      # Restart your server here (e.g., using pm2 or systemctl)
+      # Consider providing more specific restart instructions based on your setup
