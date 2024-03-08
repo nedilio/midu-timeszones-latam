@@ -25,13 +25,21 @@ jobs:
         run: npm run build
 
       - name: Transfer files to EC2 instance
-        uses: appleboy/scp-action@master
+        uses: nLoizar/rsync-action@v2 # Replace with the desired rsync action
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "dist/*"
-          target: "/var/www/html/timezones"
+          source: "dist/" # Path to your build directory
+          destination: "ubuntu@${{ secrets.EC2_HOST }}:/var/www/html/timezones" # Username, host, and target path
+          rsync_options: "-avz"
+          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # - name: Transfer files to EC2 instance
+      #   uses: appleboy/scp-action@master
+      #   with:
+      #     host: ${{ secrets.EC2_HOST }}
+      #     username: ${{ secrets.EC2_USERNAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     source: "dist/*"
+      #     target: "/var/www/html/timezones"
 
       # - name: SSH into EC2 instance and restart server
       #   uses: appleboy/ssh-action@master
