@@ -29,7 +29,7 @@ const $input = $('input')
 const $textarea = $('textarea')
 
 function unsecuredCopyToClipboard (text) {
-  const textArea = document.createElement('textarea.hidden')
+  const textArea = document.createElement('textarea')
   textArea.value = text
   document.body.appendChild(textArea)
   textArea.focus()
