@@ -6,13 +6,13 @@ import { polyfillCountryFlagEmojis } from 'country-flag-emoji-polyfill'
 polyfillCountryFlagEmojis()
 
 function changeTimeZone (date, timeZone) {
-  const dateToUse = typeof date === 'string'
-    ? new Date(date)
-    : date
+  const dateToUse = typeof date === 'string' ? new Date(date) : date
 
-  return new Date(dateToUse.toLocaleString('en-US', {
-    timeZone
-  }))
+  return new Date(
+    dateToUse.toLocaleString('en-US', {
+      timeZone
+    })
+  )
 }
 
 const transformDateToString = (date) => {
@@ -28,8 +28,26 @@ const transformDateToString = (date) => {
 const $input = $('input')
 const $textarea = $('textarea')
 
+function unsecuredCopyToClipboard (text) {
+  const textArea = document.createElement('textarea.hidden')
+  textArea.value = text
+  document.body.appendChild(textArea)
+  textArea.focus()
+  textArea.select()
+  try {
+    document.execCommand('copy')
+  } catch (err) {
+    console.error('Unable to copy to clipboard', err)
+  }
+  document.body.removeChild(textArea)
+}
+
 const copyTextArea = async () => {
-  await navigator.clipboard.writeText($textarea.value)
+  if (!navigator.clipboard) {
+    unsecuredCopyToClipboard($textarea.value)
+  } else {
+    await navigator.clipboard.writeText($textarea.value)
+  }
 }
 
 const fillTextArea = () => {
@@ -56,9 +74,9 @@ const fillTextArea = () => {
     })
   })
 
-  const sortedTimesEntries = Object
-    .entries(times)
-    .sort(([timeA], [timeB]) => timeB - +timeA)
+  const sortedTimesEntries = Object.entries(times).sort(
+    ([timeA], [timeB]) => timeB - +timeA
+  )
 
   const html = sortedTimesEntries
     .map(([, countries]) => {
